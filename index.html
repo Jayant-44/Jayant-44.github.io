@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jayant | Portfolio</title>
+    <title>Jayant | Full Stack Developer</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -13,20 +13,26 @@
     
     <script>
         tailwind.config = {
-            darkMode: 'class', // Enables manual dark mode toggling
+            darkMode: 'class',
             theme: {
                 extend: {
-                    colors: { primary: '#06b6d4', dark: '#0f172a' }
+                    colors: { primary: '#06b6d4', dark: '#0f172a' },
+                    animation: {
+                        'scan': 'scan 2s linear infinite',
+                    },
+                    keyframes: {
+                        scan: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100%)' }
+                        }
+                    }
                 }
             }
         }
     </script>
     <style>
-        /* Light mode glass */
-        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.5); }
-        /* Dark mode glass */
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.6); }
         .dark .glass { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); }
-        
         .typing-cursor { animation: blink 1s step-end infinite; }
         @keyframes blink { 50% { opacity: 0; } }
     </style>
@@ -34,18 +40,19 @@
 <body class="bg-slate-50 dark:bg-dark text-slate-800 dark:text-slate-300 font-sans leading-relaxed selection:bg-primary selection:text-white transition-colors duration-300">
 
     <!-- Navbar -->
-    <nav class="fixed w-full z-50 glass transition-all duration-300" id="navbar">
+    <nav class="fixed w-full z-50 glass shadow-sm dark:shadow-none transition-all duration-300" id="navbar">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="text-2xl font-bold text-slate-900 dark:text-white tracking-wider">JAYANT<span class="text-primary">.</span></a>
             <div class="flex items-center space-x-6 md:space-x-8">
                 <div class="hidden md:flex space-x-8">
-                    <a href="#about" class="hover:text-primary dark:hover:text-primary transition-colors font-medium">About</a>
-                    <a href="#portfolio" class="hover:text-primary dark:hover:text-primary transition-colors font-medium">Projects</a>
-                    <a href="#contact" class="hover:text-primary dark:hover:text-primary transition-colors font-medium">Contact</a>
+                    <a href="#about" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors font-medium">About</a>
+                    <a href="#experience" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors font-medium">Experience</a>
+                    <a href="#portfolio" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors font-medium">Projects</a>
+                    <a href="#contact" class="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors font-medium">Contact</a>
                 </div>
                 <!-- Theme Toggle Button -->
-                <button id="theme-toggle" class="text-xl p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors focus:outline-none">
-                    <i class="fas fa-moon text-slate-700 dark:hidden"></i>
+                <button id="theme-toggle" class="text-xl p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors focus:outline-none relative group text-slate-700 dark:text-slate-300">
+                    <i class="fas fa-moon dark:hidden"></i>
                     <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
                 </button>
             </div>
@@ -53,73 +60,156 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="min-h-screen flex items-center pt-20 relative overflow-hidden" id="home">
-        <div class="absolute top-20 right-10 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-[128px] opacity-20"></div>
+    <section class="min-h-screen flex items-center pt-20 relative overflow-hidden bg-gradient-to-b from-transparent to-slate-100/80 dark:to-slate-900/50" id="home">
+        <!-- Interactive Canvas Background -->
+        <canvas id="neural-canvas" class="absolute inset-0 w-full h-full z-0 opacity-60 dark:opacity-60"></canvas>
         
-        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center z-10" data-aos="fade-up" data-aos-duration="1000">
-            <div>
-                <p class="text-primary font-semibold tracking-wide mb-2">WELCOME TO MY WORLD</p>
+        <div class="absolute top-20 right-10 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-[128px] opacity-20 z-0"></div>
+        
+        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center z-10 pointer-events-none" data-aos="fade-up" data-aos-duration="1000">
+            <div class="pointer-events-auto">
+                <p class="text-primary font-semibold tracking-wide mb-2 flex items-center">
+                    <i class="fas fa-microchip mr-2 animate-pulse"></i> SOFTWARE ENGINEERING GRADUATE
+                </p>
                 <h1 class="text-5xl md:text-7xl font-bold text-slate-900 dark:text-white mb-4">
                     Hi, I'm <br>
-                    <span class="text-primary">Jayant</span>
+                    <span class="text-primary drop-shadow-sm dark:drop-shadow-md">Jayant</span>
                 </h1>
                 <h2 class="text-2xl md:text-3xl font-medium text-slate-700 dark:text-slate-400 mb-6 h-10">
                     <span id="typed-text"></span><span class="typing-cursor text-primary">|</span>
                 </h2>
-                <p class="mb-8 text-slate-600 dark:text-slate-400 max-w-lg">B.Tech student combining strong computer science fundamentals with hands-on expertise in scalable web architectures and native Android experiences.</p>
+                <p class="mb-8 text-slate-600 dark:text-slate-400 max-w-lg relative">
+                    Detail-oriented software engineering graduate with hands-on expertise in full-stack development (MERN, Python, Flask) and REST API architecture. Adept at building AI-powered interfaces and scalable real-time applications.
+                </p>
                 <div class="flex space-x-4">
-                    <a href="#portfolio" class="bg-primary hover:bg-cyan-600 text-white px-8 py-3 rounded-full transition-transform hover:-translate-y-1 shadow-lg shadow-cyan-500/30">View Work</a>
-                    <a href="https://github.com/Jayant-44" target="_blank" class="border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:border-primary dark:hover:border-primary px-8 py-3 rounded-full transition-all hover:text-primary dark:hover:text-primary"><i class="fab fa-github mr-2"></i>GitHub</a>
+                    <a href="#portfolio" class="bg-primary hover:bg-cyan-600 text-white px-8 py-3 rounded-full transition-all hover:-translate-y-1 shadow-lg shadow-cyan-500/30 dark:shadow-cyan-500/40 font-medium tracking-wide">View Work</a>
+                    <a href="https://github.com/Jayant-44" target="_blank" class="bg-white dark:bg-transparent border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white px-8 py-3 rounded-full transition-all hover:-translate-y-1 hover:border-primary hover:text-primary dark:hover:text-primary flex items-center shadow-md dark:shadow-none"><i class="fab fa-github mr-2 text-xl"></i> GitHub</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About & Skills -->
-    <section class="py-20 bg-slate-100/50 dark:bg-slate-900/50 relative" id="about">
+    <!-- About, Education & Experience -->
+    <section class="py-20 bg-slate-100/80 dark:bg-slate-900/50 relative" id="about">
         <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-12 text-center" data-aos="fade-up">About <span class="text-primary">Me</span></h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-12 text-center" data-aos="fade-up">Background & <span class="text-primary">Skills</span></h2>
             
             <div class="grid md:grid-cols-2 gap-12">
-                <!-- Education -->
-                <div class="glass p-8 rounded-2xl" data-aos="fade-right">
-                    <h3 class="text-2xl font-semibold text-slate-900 dark:text-white mb-6"><i class="fas fa-graduation-cap text-primary mr-3"></i>Education</h3>
-                    <div class="border-l-2 border-primary/30 pl-6 space-y-6 relative">
-                        <div class="relative">
-                            <div class="absolute -left-[31px] top-1 w-4 h-4 bg-primary rounded-full border-4 border-white dark:border-slate-900 transition-colors"></div>
-                            <h4 class="text-lg font-bold text-slate-900 dark:text-white">B.Tech</h4>
-                            <p class="text-sm text-primary mb-2">Final Year (8th Semester) • Aug 2022 – 2026</p>
+                <!-- Left Column -->
+                <div class="space-y-8">
+                    
+                    <!-- Personal Details -->
+                    <div class="glass p-8 rounded-2xl border-t-4 border-t-primary shadow-lg shadow-slate-200/50 dark:shadow-none" data-aos="fade-right">
+                        <h3 class="text-2xl font-semibold text-slate-900 dark:text-white mb-6"><i class="fas fa-user-circle text-primary mr-3"></i>Personal Details</h3>
+                        <ul class="space-y-4 text-sm text-slate-700 dark:text-slate-300">
+                            <li class="flex items-center">
+                                <i class="fas fa-envelope text-primary w-6 text-center"></i> 
+                                <strong class="w-20 text-slate-900 dark:text-white">Email:</strong> 
+                                <a href="mailto:jayant05032004@gmail.com" class="hover:text-primary transition-colors break-all">jayant05032004@gmail.com</a>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-phone text-primary w-6 text-center"></i> 
+                                <strong class="w-20 text-slate-900 dark:text-white">Phone:</strong> 
+                                <span>+91 8745060323</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-map-marker-alt text-primary w-6 text-center"></i> 
+                                <strong class="w-20 text-slate-900 dark:text-white">Location:</strong> 
+                                <span>Gurgaon, Haryana, India</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-briefcase text-primary w-6 text-center"></i> 
+                                <strong class="w-20 text-slate-900 dark:text-white">Status:</strong> 
+                                <span class="text-primary font-medium">Available</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Education -->
+                    <div class="glass p-8 rounded-2xl border-t-4 border-t-primary shadow-lg shadow-slate-200/50 dark:shadow-none" data-aos="fade-right" data-aos-delay="100">
+                        <h3 class="text-2xl font-semibold text-slate-900 dark:text-white mb-6"><i class="fas fa-graduation-cap text-primary mr-3"></i>Education</h3>
+                        <div class="border-l-2 border-primary/30 pl-6 space-y-6 relative">
+                            <div class="relative">
+                                <div class="absolute -left-[31px] top-1 w-4 h-4 bg-primary rounded-full border-4 border-white dark:border-slate-900 transition-colors shadow-sm dark:shadow-[0_0_10px_rgba(6,182,212,0.8)]"></div>
+                                <h4 class="text-lg font-bold text-slate-900 dark:text-white">B.Tech in IT (AIML)</h4>
+                                <p class="text-sm text-primary mb-2 font-medium">Panipat Institute of Engineering & Technology • 2022 – 2026</p>
+                            </div>
+                            <div class="relative">
+                                <div class="absolute -left-[31px] top-1 w-4 h-4 bg-slate-300 dark:bg-slate-700 rounded-full border-4 border-white dark:border-slate-900 transition-colors"></div>
+                                <h4 class="text-lg font-bold text-slate-900 dark:text-white">SD Memorial Sr. Sec. School</h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400 mb-1">12th Grade • 82%</p>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">10th Grade • 88%</p>
+                            </div>
                         </div>
-                        <div class="relative">
-                            <div class="absolute -left-[31px] top-1 w-4 h-4 bg-slate-300 dark:bg-slate-600 rounded-full border-4 border-white dark:border-slate-900 transition-colors"></div>
-                            <h4 class="text-lg font-bold text-slate-900 dark:text-white">SD Memorial Sr. Sec. School</h4>
-                            <p class="text-sm text-slate-600 dark:text-slate-400 mb-1">12th Grade • 82%</p>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">10th Grade • 88%</p>
+                    </div>
+
+                    <!-- Experience -->
+                    <div class="glass p-8 rounded-2xl border-t-4 border-t-primary shadow-lg shadow-slate-200/50 dark:shadow-none" data-aos="fade-right" data-aos-delay="200" id="experience">
+                        <h3 class="text-2xl font-semibold text-slate-900 dark:text-white mb-6"><i class="fas fa-briefcase text-primary mr-3"></i>Experience</h3>
+                        <div class="border-l-2 border-primary/30 pl-6 space-y-6 relative">
+                            <div class="relative group">
+                                <div class="absolute -left-[31px] top-1 w-4 h-4 bg-primary rounded-full border-4 border-white dark:border-slate-900 transition-colors group-hover:shadow-[0_0_10px_rgba(6,182,212,0.8)]"></div>
+                                <h4 class="text-lg font-bold text-slate-900 dark:text-white">Full Stack Intern @ Cognifyz</h4>
+                                <p class="text-sm text-primary mb-2 font-medium">Jul 2025 – Aug 2025</p>
+                                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Developed "PeelJobs", an AI-powered job portal. Integrated advanced search with Elasticsearch, caching via Redis, and built responsive frontends.</p>
+                            </div>
+                            <div class="relative group">
+                                <div class="absolute -left-[31px] top-1 w-4 h-4 bg-slate-300 dark:bg-slate-700 rounded-full border-4 border-white dark:border-slate-900 transition-colors group-hover:bg-primary"></div>
+                                <h4 class="text-lg font-bold text-slate-900 dark:text-white">Web Dev Intern @ ASD</h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400 mb-1">Jul 2024 – Aug 2024</p>
+                                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Designed and deployed a full-stack Courier Service application managing database architecture using Python and Django.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Skills -->
-                <div class="glass p-8 rounded-2xl" data-aos="fade-left">
-                    <h3 class="text-2xl font-semibold text-slate-900 dark:text-white mb-6"><i class="fas fa-code text-primary mr-3"></i>Technical Skills</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <p class="text-sm font-semibold mb-2 text-slate-800 dark:text-slate-300">Web Full Stack (MERN)</p>
-                            <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2 transition-colors"><div class="bg-primary h-2 rounded-full" style="width: 85%"></div></div>
+                <!-- Right Column: Skills -->
+                <div class="glass p-8 rounded-2xl h-fit relative overflow-hidden shadow-lg shadow-slate-200/50 dark:shadow-none" data-aos="fade-left">
+                    <i class="fas fa-code-branch absolute -bottom-10 -right-10 text-9xl text-slate-200 dark:text-slate-800/50 opacity-60 dark:opacity-50 transform rotate-12 pointer-events-none"></i>
+                    
+                    <h3 class="text-2xl font-semibold text-slate-900 dark:text-white mb-6 relative z-10"><i class="fas fa-terminal text-primary mr-3"></i>Technical Expertise</h3>
+                    
+                    <div class="mb-6 relative z-10">
+                        <p class="text-sm font-semibold mb-3 text-slate-800 dark:text-slate-300 border-b border-slate-200 dark:border-slate-800 pb-2 flex items-center"><i class="fas fa-chevron-right text-primary mr-2 text-xs"></i> Languages</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-white dark:bg-[#111] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none hover:border-primary hover:text-primary transition-colors cursor-default">Python</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#111] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none hover:border-primary hover:text-primary transition-colors cursor-default">C/C++</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#111] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none hover:border-primary hover:text-primary transition-colors cursor-default">Java</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#111] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none hover:border-primary hover:text-primary transition-colors cursor-default">JavaScript</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#111] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none hover:border-primary hover:text-primary transition-colors cursor-default">Kotlin</span>
                         </div>
-                        <div>
-                            <p class="text-sm font-semibold mb-2 text-slate-800 dark:text-slate-300">Android (Kotlin, Jetpack Compose)</p>
-                            <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2 transition-colors"><div class="bg-primary h-2 rounded-full" style="width: 90%"></div></div>
+                    </div>
+
+                    <div class="mb-6 relative z-10">
+                        <p class="text-sm font-semibold mb-3 text-slate-800 dark:text-slate-300 border-b border-slate-200 dark:border-slate-800 pb-2 flex items-center"><i class="fas fa-chevron-right text-primary mr-2 text-xs"></i> Web & Frameworks</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-white dark:bg-[#111] rounded-full text-xs font-medium text-slate-800 dark:text-primary border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none hover:shadow-md hover:shadow-primary/20 transition-all cursor-default">ReactJS</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#111] rounded-full text-xs font-medium text-slate-800 dark:text-primary border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none hover:shadow-[0_0_8px_rgba(6,182,212,0.4)] transition-all cursor-default">Node.js</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#111] rounded-full text-xs font-medium text-slate-800 dark:text-primary border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none hover:shadow-[0_0_8px_rgba(6,182,212,0.4)] transition-all cursor-default">Django</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#111] rounded-full text-xs font-medium text-slate-800 dark:text-primary border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none hover:shadow-[0_0_8px_rgba(6,182,212,0.4)] transition-all cursor-default">Flask</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#111] rounded-full text-xs font-medium text-slate-800 dark:text-primary border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none hover:shadow-[0_0_8px_rgba(6,182,212,0.4)] transition-all cursor-default">Tailwind CSS</span>
                         </div>
-                        <div>
-                            <p class="text-sm font-semibold mb-2 text-slate-800 dark:text-slate-300">Python & Databases</p>
-                            <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2 transition-colors"><div class="bg-primary h-2 rounded-full" style="width: 80%"></div></div>
+                    </div>
+
+                    <div class="mb-6 relative z-10">
+                        <p class="text-sm font-semibold mb-3 text-slate-800 dark:text-slate-300 border-b border-slate-200 dark:border-slate-800 pb-2 flex items-center"><i class="fas fa-chevron-right text-primary mr-2 text-xs"></i> Databases, AI & Tools</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-white dark:bg-[#111] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none hover:bg-primary hover:text-white transition-colors cursor-default">PostgreSQL</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#111] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none hover:bg-primary hover:text-white transition-colors cursor-default">MongoDB</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#111] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none hover:bg-primary hover:text-white transition-colors cursor-default">Elasticsearch</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#111] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none hover:bg-primary hover:text-white transition-colors cursor-default">Redis</span>
+                            <span class="px-3 py-1 bg-primary rounded-full text-xs font-medium text-white shadow-md shadow-primary/30 cursor-default"><i class="fas fa-brain mr-1"></i> Deep Learning</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#111] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none hover:bg-primary hover:text-white transition-colors cursor-default">Git/GitHub</span>
                         </div>
-                        <div class="pt-4 flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-white dark:bg-slate-800 rounded-full text-xs font-medium text-slate-700 dark:text-primary border border-slate-200 dark:border-transparent transition-colors">Firebase</span>
-                            <span class="px-3 py-1 bg-white dark:bg-slate-800 rounded-full text-xs font-medium text-slate-700 dark:text-primary border border-slate-200 dark:border-transparent transition-colors">Git/GitHub</span>
-                            <span class="px-3 py-1 bg-white dark:bg-slate-800 rounded-full text-xs font-medium text-slate-700 dark:text-primary border border-slate-200 dark:border-transparent transition-colors">Hilt</span>
-                        </div>
+                    </div>
+                    
+                    <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700 relative z-10">
+                        <h4 class="text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center"><i class="fas fa-award text-primary mr-2"></i> Certifications & Achievements</h4>
+                        <ul class="text-xs text-slate-600 dark:text-slate-400 space-y-2 list-disc list-inside">
+                            <li>PIET - Fullstack dev (Django, Flask, Python, ReactJS)</li>
+                            <li>IIT Bombay - Bootstrap & Arduino Training Certification</li>
+                            <li>Hackathon Participant (SIH, KRMU)</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -127,63 +217,186 @@
     </section>
 
     <!-- Portfolio -->
-    <section class="py-20 transition-colors duration-300" id="portfolio">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-12 text-center" data-aos="fade-up">Featured <span class="text-primary">Projects</span></h2>
+    <section class="py-20 transition-colors duration-300 relative bg-slate-50 dark:bg-dark" id="portfolio">
+        <div class="absolute -left-20 top-40 w-96 h-96 bg-primary/10 rounded-full mix-blend-multiply filter blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-12" data-aos="fade-up">My Work</h2>
             
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Project 1 -->
-                <div class="glass rounded-xl overflow-hidden group hover:-translate-y-2 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
-                    <div class="h-48 bg-slate-100 dark:bg-slate-800 flex items-center justify-center relative overflow-hidden transition-colors duration-300">
-                        <i class="fab fa-android text-6xl text-slate-300 dark:text-slate-600 group-hover:scale-110 group-hover:text-primary transition-all duration-500"></i>
+            <!-- 3 Column Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project 1: PeelJobs -->
+                <div class="relative group rounded-2xl overflow-hidden shadow-xl shadow-slate-200/60 dark:shadow-none bg-slate-200 dark:bg-[#111] border border-slate-200 dark:border-slate-800" data-aos="fade-up" data-aos-delay="100">
+                    <!-- Changed to h-auto so the box scales dynamically to the image -->
+                    <img src="assets/projects/peeljobs.jpg" alt="PeelJobs" class="w-full h-auto min-h-[300px] object-cover transition-transform duration-700 md:group-hover:scale-110 block">
+                    
+                    <div class="absolute inset-0 flex items-center justify-center -z-10 bg-slate-100 dark:bg-[#111]">
+                        <i class="fas fa-briefcase text-6xl text-slate-400 dark:text-slate-800"></i>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Chit Chat Application</h3>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">A real-time Android messaging system inspired by WhatsApp. Built with Kotlin, Jetpack Compose, Firebase, and Hilt.</p>
-                        <a href="https://github.com/Jayant-44" target="_blank" class="text-primary text-sm font-semibold hover:underline">View Code <i class="fas fa-arrow-right ml-1"></i></a>
+
+                    <!-- Overlay: Always visible on mobile (opacity-100), hides on desktop until hovered (md:opacity-0) -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/30 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-6 text-center">
+                        <h3 class="text-2xl font-bold text-white mb-3 transform translate-y-0 md:-translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300">PeelJobs</h3>
+                        <p class="text-sm text-slate-300 mb-6 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300 md:delay-75">
+                            Engineered a robust job-matching platform using Django and PostgreSQL. Integrated Redis and Elasticsearch.
+                        </p>
+                        <a href="https://github.com/Jayant-44" target="_blank" class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-slate-900 hover:text-primary transition-colors transform scale-100 md:scale-0 md:group-hover:scale-100 duration-300 md:delay-150 shadow-lg">
+                            <i class="fas fa-external-link-alt text-xl"></i>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Project 2 -->
-                <div class="glass rounded-xl overflow-hidden group hover:-translate-y-2 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
-                    <div class="h-48 bg-slate-100 dark:bg-slate-800 flex items-center justify-center transition-colors duration-300">
-                        <i class="fas fa-robot text-6xl text-slate-300 dark:text-slate-600 group-hover:scale-110 group-hover:text-primary transition-all duration-500"></i>
+                <!-- Project 2: Plagiarism System -->
+                <div class="relative group rounded-2xl overflow-hidden shadow-xl shadow-slate-200/60 dark:shadow-none bg-slate-200 dark:bg-[#111] border border-slate-200 dark:border-slate-800" data-aos="fade-up" data-aos-delay="200">
+                    <img src="assets/Plagiarism.png" alt="Plagiarism System" class="w-full h-auto min-h-[300px] object-cover transition-transform duration-700 md:group-hover:scale-110 block">
+                    
+                    <div class="absolute inset-0 flex items-center justify-center -z-10 bg-slate-100 dark:bg-[#111]">
+                        <i class="fas fa-file-shield text-6xl text-slate-400 dark:text-slate-800"></i>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">AI Website Builder</h3>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">An innovative web tool designed to dynamically generate frontend code directly from natural language user prompts.</p>
-                        <a href="https://github.com/Jayant-44" target="_blank" class="text-primary text-sm font-semibold hover:underline">View Code <i class="fas fa-arrow-right ml-1"></i></a>
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/30 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-6 text-center">
+                        <h3 class="text-2xl font-bold text-white mb-3 transform translate-y-0 md:-translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300">Plagiarism Detection</h3>
+                        <p class="text-sm text-slate-300 mb-6 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300 md:delay-75">
+                            Designed a full-stack checker using Python, streamlining robust file structuring and relational databases.
+                        </p>
+                        <a href="https://github.com/Jayant-44" target="_blank" class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-slate-900 hover:text-primary transition-colors transform scale-100 md:scale-0 md:group-hover:scale-100 duration-300 md:delay-150 shadow-lg">
+                            <i class="fas fa-external-link-alt text-xl"></i>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Project 3 -->
-                <div class="glass rounded-xl overflow-hidden group hover:-translate-y-2 transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
-                    <div class="h-48 bg-slate-100 dark:bg-slate-800 flex items-center justify-center transition-colors duration-300">
-                        <i class="fas fa-file-shield text-6xl text-slate-300 dark:text-slate-600 group-hover:scale-110 group-hover:text-primary transition-all duration-500"></i>
+                <!-- Project 3: AI Website Builder -->
+                <div class="relative group rounded-2xl overflow-hidden shadow-xl shadow-slate-200/60 dark:shadow-none bg-slate-200 dark:bg-[#111] border border-slate-200 dark:border-slate-800" data-aos="fade-up" data-aos-delay="300">
+                    <img src="assets/webbuddy.png" alt="AI Website Builder" class="w-full h-auto min-h-[300px] object-cover transition-transform duration-700 md:group-hover:scale-110 block">
+                    
+                    <div class="absolute inset-0 flex items-center justify-center -z-10 bg-slate-100 dark:bg-[#111]">
+                        <i class="fas fa-robot text-6xl text-slate-400 dark:text-slate-800"></i>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Plagiarism System</h3>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">A Python and database-driven major project designed to analyze texts and detect duplicated content reliably.</p>
-                        <a href="https://github.com/Jayant-44" target="_blank" class="text-primary text-sm font-semibold hover:underline">View Code <i class="fas fa-arrow-right ml-1"></i></a>
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/30 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-6 text-center">
+                        <h3 class="text-2xl font-bold text-white mb-3 transform translate-y-0 md:-translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300">AI Website Builder</h3>
+                        <p class="text-sm text-slate-300 mb-6 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300 md:delay-75">
+                            An automated builder leveraging AI to generate functional frontend web code directly from natural language prompts.
+                        </p>
+                        <a href="https://github.com/Jayant-44" target="_blank" class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-slate-900 hover:text-primary transition-colors transform scale-100 md:scale-0 md:group-hover:scale-100 duration-300 md:delay-150 shadow-lg">
+                            <i class="fas fa-external-link-alt text-xl"></i>
+                        </a>
                     </div>
                 </div>
+
+                <!-- Project 4: Chit Chat -->
+                <div class="relative group rounded-2xl overflow-hidden shadow-xl shadow-slate-200/60 dark:shadow-none bg-slate-200 dark:bg-[#111] border border-slate-200 dark:border-slate-800" data-aos="fade-up" data-aos-delay="400">
+                    <img src="assets/chit chat.png" alt="Chit Chat App" class="w-full h-auto min-h-[300px] object-cover transition-transform duration-700 md:group-hover:scale-110 block">
+                    
+                    <div class="absolute inset-0 flex items-center justify-center -z-10 bg-slate-100 dark:bg-[#111]">
+                        <i class="fab fa-android text-6xl text-slate-400 dark:text-slate-800"></i>
+                    </div>
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/30 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-6 text-center">
+                        <h3 class="text-2xl font-bold text-white mb-3 transform translate-y-0 md:-translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300">Chit Chat App</h3>
+                        <p class="text-sm text-slate-300 mb-6 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300 md:delay-75">
+                            Real-time Android messaging integrating Kotlin, Jetpack Compose, and Firebase for backend authentication.
+                        </p>
+                        <a href="https://github.com/Jayant-44" target="_blank" class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-slate-900 hover:text-primary transition-colors transform scale-100 md:scale-0 md:group-hover:scale-100 duration-300 md:delay-150 shadow-lg">
+                            <i class="fas fa-external-link-alt text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 5: Game Engine -->
+                <div class="relative group rounded-2xl overflow-hidden shadow-xl shadow-slate-200/60 dark:shadow-none bg-slate-200 dark:bg-[#111] border border-slate-200 dark:border-slate-800" data-aos="fade-up" data-aos-delay="500">
+                    <img src="assets/projects/gameengine.jpg" alt="Custom Game Engine" class="w-full h-auto min-h-[300px] object-cover transition-transform duration-700 md:group-hover:scale-110 block">
+                    
+                    <div class="absolute inset-0 flex items-center justify-center -z-10 bg-slate-100 dark:bg-[#111]">
+                        <i class="fas fa-gamepad text-6xl text-slate-400 dark:text-slate-800"></i>
+                    </div>
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/30 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-6 text-center">
+                        <h3 class="text-2xl font-bold text-white mb-3 transform translate-y-0 md:-translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300">Custom 2D Engine</h3>
+                        <p class="text-sm text-slate-300 mb-6 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300 md:delay-75">
+                            A bespoke 2D game engine built from scratch using core low-level programming principles and efficient rendering.
+                        </p>
+                        <a href="https://github.com/Jayant-44" target="_blank" class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-slate-900 hover:text-primary transition-colors transform scale-100 md:scale-0 md:group-hover:scale-100 duration-300 md:delay-150 shadow-lg">
+                            <i class="fas fa-external-link-alt text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </section>
 
-    <!-- Footer/Contact -->
-    <footer class="glass mt-12 py-8 text-center border-t border-slate-200 dark:border-transparent transition-colors duration-300" id="contact">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Let's Connect</h2>
-            <div class="flex justify-center space-x-6 mb-6">
-                <!-- Be sure to update your LinkedIn and Email links here! -->
-                <a href="https://github.com/Jayant-44" target="_blank" class="w-12 h-12 bg-white dark:bg-slate-800 border border-slate-200 dark:border-transparent rounded-full flex items-center justify-center text-xl text-slate-700 dark:text-slate-300 hover:bg-primary hover:border-primary hover:text-white dark:hover:bg-primary dark:hover:text-white transition-all shadow-sm dark:shadow-none"><i class="fab fa-github"></i></a>
-                
-                <a href="#" class="w-12 h-12 bg-white dark:bg-slate-800 border border-slate-200 dark:border-transparent rounded-full flex items-center justify-center text-xl text-slate-700 dark:text-slate-300 hover:bg-primary hover:border-primary hover:text-white dark:hover:bg-primary dark:hover:text-white transition-all shadow-sm dark:shadow-none"><i class="fab fa-linkedin-in"></i></a>
-                
-                <a href="mailto:your.email@example.com" class="w-12 h-12 bg-white dark:bg-slate-800 border border-slate-200 dark:border-transparent rounded-full flex items-center justify-center text-xl text-slate-700 dark:text-slate-300 hover:bg-primary hover:border-primary hover:text-white dark:hover:bg-primary dark:hover:text-white transition-all shadow-sm dark:shadow-none"><i class="fas fa-envelope"></i></a>
+    <!-- Contact Me & Footer -->
+    <footer class="bg-slate-100/80 dark:bg-slate-900/50 transition-colors duration-300 relative overflow-hidden" id="contact">
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-primary/10 rounded-full mix-blend-multiply filter blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-6xl mx-auto px-6 py-16 relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-12 text-center" data-aos="fade-up">Contact <span class="text-primary">Me</span></h2>
+            
+            <div class="glass p-8 md:p-12 rounded-3xl grid md:grid-cols-2 gap-12 items-center shadow-xl shadow-slate-200/50 dark:shadow-none" data-aos="fade-up">
+                <!-- Contact Info Left Side -->
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Let's Discuss Opportunities</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                        I am currently available for Full Stack Developer roles. Whether you have a question or just want to say hi, feel free to drop a message!
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center group">
+                            <div class="w-12 h-12 bg-white dark:bg-[#111] rounded-full flex items-center justify-center text-primary mr-4 shadow-sm border border-slate-200 dark:border-slate-700 group-hover:bg-primary group-hover:border-primary group-hover:text-white transition-colors">
+                                <i class="fas fa-envelope text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider">Email</p>
+                                <a href="mailto:jayant05032004@gmail.com" class="text-lg font-bold text-slate-900 dark:text-white hover:text-primary transition-colors">jayant05032004@gmail.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center group">
+                            <div class="w-12 h-12 bg-white dark:bg-[#111] rounded-full flex items-center justify-center text-primary mr-4 shadow-sm border border-slate-200 dark:border-slate-700 group-hover:bg-primary group-hover:border-primary group-hover:text-white transition-colors">
+                                <i class="fas fa-phone-alt text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider">Phone</p>
+                                <a href="tel:+918745060323" class="text-lg font-bold text-slate-900 dark:text-white hover:text-primary transition-colors">+91 8745060323</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center group">
+                            <div class="w-12 h-12 bg-white dark:bg-[#111] rounded-full flex items-center justify-center text-primary mr-4 shadow-sm border border-slate-200 dark:border-slate-700 group-hover:bg-primary group-hover:border-primary group-hover:text-white transition-colors">
+                                <i class="fas fa-map-marker-alt text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider">Location</p>
+                                <p class="text-lg font-bold text-slate-900 dark:text-white">Gurgaon, Haryana, India</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action & Socials Right Side -->
+                <div class="flex flex-col items-center md:items-end space-y-8">
+                    <!-- Social Links -->
+                    <div class="flex space-x-6">
+                        <a href="https://www.linkedin.com/in/jayant" target="_blank" class="w-14 h-14 bg-white dark:bg-slate-800 border border-slate-200 dark:border-transparent rounded-full flex items-center justify-center text-2xl text-slate-700 dark:text-slate-300 hover:bg-primary hover:text-white hover:-translate-y-2 transition-all shadow-md dark:shadow-lg dark:shadow-cyan-500/10">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/Jayant-44" target="_blank" class="w-14 h-14 bg-white dark:bg-slate-800 border border-slate-200 dark:border-transparent rounded-full flex items-center justify-center text-2xl text-slate-700 dark:text-slate-300 hover:bg-primary hover:text-white hover:-translate-y-2 transition-all shadow-md dark:shadow-lg dark:shadow-cyan-500/10">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Resume Download Button -->
+                    <a href="assets/JAYANT_RESUME.pdf" download class="w-full md:w-auto bg-primary hover:bg-cyan-600 text-white px-8 py-4 rounded-full transition-transform hover:-translate-y-1 shadow-lg shadow-cyan-500/40 font-bold tracking-wide flex items-center justify-center text-lg">
+                        <i class="fas fa-download mr-3"></i> Download Resume
+                    </a>
+                </div>
             </div>
-            <p class="text-slate-500 text-sm">© 2026 Jayant. Built with Tailwind CSS.</p>
+            
+            <div class="text-center mt-12 pt-8 border-t border-slate-200 dark:border-slate-800">
+                <p class="text-slate-500 text-sm font-medium">© 2026 Jayant. Built with Tailwind CSS.</p>
+            </div>
         </div>
     </footer>
 
@@ -197,9 +410,9 @@
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
-                nav.classList.add('bg-white/90', 'dark:bg-slate-900/90', 'shadow-lg');
+                nav.classList.add('bg-white/90', 'dark:bg-slate-900/90', 'shadow-md', 'dark:shadow-lg', 'backdrop-blur-md');
             } else {
-                nav.classList.remove('bg-white/90', 'dark:bg-slate-900/90', 'shadow-lg');
+                nav.classList.remove('bg-white/90', 'dark:bg-slate-900/90', 'shadow-md', 'dark:shadow-lg', 'backdrop-blur-md');
             }
         });
 
@@ -223,7 +436,7 @@
         });
 
         // 4. Typing Effect logic
-        const roles = ["Full Stack Developer", "Android Developer", "Problem Solver"];
+        const roles = ["Full Stack Developer", "Backend Developer", "AIML Enthusiast"];
         let roleIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
@@ -254,7 +467,113 @@
         
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(type, 1000);
+            initNeuralNetwork();
         });
+
+        // 5. Interactive AI Neural Network Canvas
+        function initNeuralNetwork() {
+            const canvas = document.getElementById('neural-canvas');
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = document.getElementById('home').offsetHeight;
+            
+            // Re-adjust canvas size on resize
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = document.getElementById('home').offsetHeight;
+            });
+
+            const particles = [];
+            const particleCount = Math.floor(window.innerWidth / 15); // Responsive particle count
+            const mouse = { x: null, y: null, radius: 150 };
+
+            // Mouse interaction
+            document.getElementById('home').addEventListener('mousemove', (e) => {
+                mouse.x = e.x;
+                mouse.y = e.y;
+            });
+            document.getElementById('home').addEventListener('mouseleave', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 1;
+                    this.vy = (Math.random() - 0.5) * 1;
+                    this.size = Math.random() * 2 + 1;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    // Bounce off edges
+                    if(this.x < 0 || this.x > width) this.vx *= -1;
+                    if(this.y < 0 || this.y > height) this.vy *= -1;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    // Determine theme for dot color
+                    const isDark = document.documentElement.classList.contains('dark');
+                    // Made light mode dots slightly darker for better visibility
+                    ctx.fillStyle = isDark ? 'rgba(6, 182, 212, 0.5)' : 'rgba(15, 23, 42, 0.3)';
+                    ctx.fill();
+                }
+            }
+
+            for(let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                const isDark = document.documentElement.classList.contains('dark');
+                
+                for(let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                    
+                    // Connect particles
+                    for(let j = i; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx*dx + dy*dy);
+                        
+                        if(distance < 100) {
+                            ctx.beginPath();
+                            const opacity = 1 - (distance/100);
+                            // Made light mode lines slightly darker
+                            ctx.strokeStyle = isDark ? `rgba(6, 182, 212, ${opacity * 0.2})` : `rgba(15, 23, 42, ${opacity * 0.25})`;
+                            ctx.lineWidth = 1;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+
+                    // Mouse interaction
+                    if(mouse.x != null) {
+                        const dx = particles[i].x - mouse.x;
+                        const dy = particles[i].y - mouse.y;
+                        const distance = Math.sqrt(dx*dx + dy*dy);
+                        
+                        if(distance < mouse.radius) {
+                            ctx.beginPath();
+                            const opacity = 1 - (distance/mouse.radius);
+                            ctx.strokeStyle = isDark ? `rgba(6, 182, 212, ${opacity * 0.8})` : `rgba(6, 182, 212, ${opacity * 0.6})`;
+                            ctx.lineWidth = 2;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(mouse.x, mouse.y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
     </script>
 </body>
 </html>
